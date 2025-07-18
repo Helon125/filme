@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Pearl: Análises Aprofundadas</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Usando Inter para um visual moderno */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #8B0000; /* Vermelho escuro, remetendo ao filme */
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        nav {
+            background-color: #550000;
+            padding: 0.8rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 8px;
+            margin: 0 5px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            background-color: #A00000;
+            transform: translateY(-2px);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .section {
+            background-color: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #8B0000;
+            border-bottom: 3px solid #8B0000;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 30px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        /* Estilos para as Abas */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Permite que as abas quebrem a linha em telas menores */
+        }
+        .tab-button {
+            background-color: #D3D3D3; /* Cinza claro */
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin: 0 5px 5px 5px; /* Espaçamento entre as abas */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .tab-button:hover {
+            background-color: #C0C0C0;
+        }
+        .tab-button.active {
+            background-color: #8B0000;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .tab-content {
+            display: none; /* Esconde todas as abas por padrão */
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 0 12px 12px; /* Apenas bordas inferiores arredondadas */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .tab-content.active {
+            display: block; /* Mostra a aba ativa */
+        }
+
+        /* Estilos específicos para o Joguinho */
+        #game-section {
+            text-align: center;
+            background-color: #f8f8f8;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        #game-canvas {
+            border: 3px solid #8B0000;
+            background-color: #fff;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        #game-controls button {
+            background: linear-gradient(to bottom, #8B0000, #A00000);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        #game-controls button:hover {
+            background: linear-gradient(to bottom, #A00000, #B00000);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        #game-controls p {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        #game-title {
+            color: #8B0000;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        /* Estilos para a Tabela Comparativa */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            color: #555;
+            font-weight: bold;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .comparison-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            nav a {
+                padding: 0.5rem 1rem;
+                margin: 0 3px;
+            }
+            .tab-button {
+                padding: 10px 15px;
+                font-size: 1rem;
+                margin: 0 3px 5px 3px;
+            }
+            .tabs {
+                flex-direction: column; /* Abas empilhadas em telas pequenas */
+                align-items: center;
+            }
+            .tab-button {
+                width: 90%; /* Abas ocupam quase toda a largura */
+                border-radius: 8px; /* Arredondar todas as bordas */
+            }
+            .tab-content {
+                border-radius: 12px; /* Arredondar todas as bordas para o conteúdo */
+            }
+            .comparison-table, .comparison-table tbody, .comparison-table tr, .comparison-table td {
+                display: block;
+                width: 100%;
+            }
+            .comparison-table thead {
+                display: none; /* Esconde o cabeçalho da tabela em mobile */
+            }
+            .comparison-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            .comparison-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .comparison-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: calc(50% - 20px);
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+                color: #8B0000;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mundo Pearl: Análises Aprofundadas</h1>
+        <p>Um olhar multifacetado sobre a obra de Ti West</p>
+    </header>
+
+    <nav>
+        <a href="#inicio">Início</a>
+        <a href="#analises-section">Análises</a>
+        <a href="#joguinho">O Joguinho de Pearl</a>
+        <a href="#contato">Contato</a>
+    </nav>
+
+    <div class="container">
+        <section id="inicio" class="section">
+            <h2>Bem-vindo ao Universo de Pearl!</h2>
+            <p>Explore as camadas mais profundas de um dos personagens mais intrigantes do terror contemporâneo. Aqui, desvendamos as motivações e o cenário de Pearl sob diversas perspectivas teóricas e filosóficas.</p>
+            <p>Prepare-se para mergulhar nas complexidades da mente de Pearl e entender o que a levou ao seu destino trágico e violento.</p>
+        </section>
+
+        <section id="analises-section" class="section">
+            <h2>Nossas Análises Profundas</h2>
+            <p>Selecione uma aba abaixo para explorar as análises detalhadas ou a tabela comparativa:</p>
+
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'freudiana')">Freudiana</button>
+                <button class="tab-button" onclick="openTab(event, 'esquizoanalise')">Esquizoanálise</button>
+                <button class="tab-button" onclick="openTab(event, 'kierkegaard')">Kierkegaard</button>
+                <button class="tab-button" onclick="openTab(event, 'nietzsche')">Nietzsche</button>
+                <button class="tab-button" onclick="openTab(event, 'espinosa')">Espinosa</button>
+                <button class="tab-button" onclick="openTab(event, 'comparativa')">Tabela Comparativa</button>
+            </div>
+
+            <div id="freudiana" class="tab-content active">
+                <h3>Análise Psicanalítica de "Pearl": A Tragédia do Eu Desintegrado</h3>
+                <p>Analisando "Pearl" através das lentes da psicanálise freudiana, o filme transcende o terror para se tornar um estudo de caso clínico sobre a desintegração da psique. A protagonista, Pearl, é um exemplo trágico do colapso do **Eu (Ego)**, esmagado pela guerra entre os impulsos primitivos do **Isso (Id)** e as proibições esmagadoras do **Supereu (Superego)**.</p>
+
+                <h4>1. A Estrutura da Psique de Pearl</h4>
+                <ul>
+                    <li>**O Id Avassalador:** O Isso de Pearl é a força motriz da narrativa. Ele se manifesta em seus "desejos reprimidos": uma libido pulsante e uma ambição desesperada por fama e adoração. Seus sonhos de "se tornar uma estrela de cinema" não são meras aspirações; são fantasias de gratificação total, a expressão máxima do **Princípio do Prazer**. O Isso de Pearl exige ser visto, desejado e libertado da realidade opressora.</li>
+                    <li>**O Superego Tirânico:** O Supereu é personificado externamente por seus "pais rígidos" e pela atmosfera sufocante da fazenda isolada em 1918. A mãe, em particular, funciona como a principal agente de repressão, impondo a moralidade, a culpa e a negação de qualquer desejo que não seja o dever. Este Supereu tirânico internalizado por Pearl proíbe a sexualidade, a vaidade e a autonomia, gerando uma imensa "frustração".</li>
+                    <li>**O Ego Fracassado:** O Eu de Pearl está em uma posição impossível. Sua função, segundo Freud, seria mediar as demandas do Isso com as restrições do Supereu e da realidade. A "vida monótona" na fazenda é a realidade insuportável. O Eu de Pearl tenta uma solução através da **sublimação**: canalizar a energia libidinal bruta em algo socialmente aceitável, como a dança e a arte de ser uma "estrela". No entanto, quando essa via de sublimação é bloqueada (sua falha na audição), o Eu não tem mais mecanismos de defesa eficazes. Ele se rompe.</li>
+                </ul>
+
+                <h4>2. Repressão e o Retorno do Reprimido</h4>
+                <p>O tema central do filme é um exemplo clássico do conceito de **repressão (recalque)** e o inevitável **retorno do reprimido**.</p>
+                <ul>
+                    <li>**A Repressão:** A vida de Pearl é um exercício contínuo de repressão. Seus impulsos sexuais e agressivos são violentamente empurrados para o inconsciente. O isolamento na fazenda, a pandemia e a guerra funcionam como uma panela de pressão, intensificando a energia psíquica que está sendo contida.</li>
+                    <li>**O Retorno do Reprimido:** A "gradual descida de Pearl à psicopatia" é, na verdade, o retorno triunfante e catastrófico do que foi reprimido. Como a energia do Isso não pode ser liberada de forma saudável ou sublimada, ela retorna de forma distorcida e monstruosa. Os "atos violentos" são os sintomas dessa falha psíquica. A brutalidade não é apenas maldade, mas a linguagem do seu inconsciente, a única forma que seus desejos encontraram para se manifestar.</li>
+                </ul>
+
+                <h4>3. Simbolismo e Mecanismos de Defesa</h4>
+                <ul>
+                    <li>**O Contraste Visual:** A "estética vibrante, quase de musical antigo" em contraste com a "brutalidade" é a representação visual perfeita da cisão na psique de Pearl. O mundo colorido é a sua fantasia, o mundo do Princípio do Prazer que seu Eu tenta construir. A violência sangrenta é a realidade do seu Isso descontrolado, manchando essa fantasia.</li>
+                    <li>**A Busca pelo "Sonho Americano":** Esta busca é a tentativa desesperada do Eu de encontrar uma narrativa que possa conciliar o Isso e o Supereu. Ser uma estrela famosa validaria seus desejos (gratificação do Isso) de uma forma socialmente aplaudida (apaziguando o Supereu). O fracasso em alcançar esse sonho simboliza o fracasso final do Eu em mediar o conflito.</li>
+                    <li>**O Monólogo Final:** Este momento é psicanaliticamente crucial. É um ato de **ab-reação**, uma descarga emocional catártica onde o material reprimido finalmente chega à consciência e é verbalizado. Pela primeira vez, Pearl articula a dor de seu Eu, as exigências de seu Isso e a tirania de seu Superego. É a confissão de uma psique em ruínas, uma tentativa tardia e aterrorizante de autoconsciência.</li>
+                </ul>
+
+                <h4>Conclusão Freudiana</h4>
+                <p>"Pearl" não é simplesmente a história da origem de uma vilã; é a dramatização da tese freudiana de que a civilização (representada pela moralidade repressora dos pais e da sociedade) gera um descontentamento profundo ao exigir a supressão dos nossos instintos mais básicos. Pearl é o resultado do que acontece quando essa supressão é absoluta e falha de forma espetacular. Sua psicopatia é a manifestação de uma libido não descarregada e da pulsão de morte (**Thanatos**) que, ao não poder ser dirigida para fora de forma sublimada, se volta contra os outros e, em última análise, contra a própria estrutura de sua sanidade. O filme é um retrato vívido e perturbador do inferno que é uma mente em guerra consigo mesma.</p>
+            </div>
+
+            <div id="esquizoanalise" class="tab-content">
+                <h3>Análise Esquizoanalítica de "Pearl": Fluxos, Cortes e Máquinas Desejantes</h3>
+                <p>A esquizoanálise, proposta por Gilles Deleuze e Félix Guattari, rejeita a primazia do inconsciente edipiano e da falta, propondo uma visão do **desejo como uma força produtiva e imanente**, que se manifesta em **fluxos** e **máquinas desejantes**. Pearl não é uma indivídua neurótica reprimida, mas sim um complexo agenciamento de máquinas que produzem e são produzidas por fluxos, em uma constante territorialização e desterritorialização.</p>
+
+                <h4>1. Pearl como Máquina Desejante</h4>
+                <p>Para a esquizoanálise, **tudo é máquina**. O corpo, a sociedade, os pensamentos – são todos agenciamentos de máquinas que se conectam, produzem fluxos e operam cortes. Pearl é, ela mesma, uma **máquina desejante**.</p>
+                <ul>
+                    <li>**Máquinas-Órgão e Fluxos de Desejo:** O corpo de Pearl e suas aspirações não são simbólicos, mas funcionais. Seus "sonhos de se tornar uma estrela de cinema" são fluxos de desejo por visibilidade, reconhecimento e movimento. Seus impulsos sexuais e agressivos são fluxos de energia que buscam conexão, expansão e descarga. Ela é uma **máquina de produção de fantasias**, constantemente conectando-se ao fluxo de imagens de cinema e dança que representam uma vida de luxo e liberdade.</li>
+                    <li>**Conexões e Cortes:** As máquinas desejantes de Pearl tentam se conectar com outras máquinas. O "marido na guerra" representa um corte, uma interrupção em um fluxo conjugal. A busca por um "emprego" ou uma "vida de estrela" são tentativas de novas conexões com máquinas sociais (o estúdio de cinema, a plateia).</li>
+                </ul>
+
+                <h4>2. O Agenciamento da Fazenda: Máquina Social Repressiva</h4>
+                <p>A fazenda isolada em 1918, com seus "pais rígidos" e a ameaça da "gripe espanhola" e da "Primeira Guerra Mundial", não é apenas um pano de fundo, mas um **agenciamento maquínico social** altamente codificado e repressivo.</p>
+                <ul>
+                    <li>**Máquina Anti-Produção:** Este agenciamento rural funciona como uma **máquina antiprodução**, que tenta estancar os fluxos de desejo de Pearl. Os pais, especialmente a mãe, atuam como as peças mais rígidas dessa máquina, impondo um "corte" constante sobre os movimentos e desejos de Pearl.</li>
+                    <li>**Territorialização Forçada:** A fazenda e as regras familiares são uma **territorialização** violenta. Pearl está presa em um território onde seus fluxos de desejo são sistematicamente deslegitimados e impedidos de se conectar a algo produtivo ou expansivo.</li>
+                </ul>
+
+                <h4>3. A Desterritorialização Violenta e o Corpo Sem Órgãos</h4>
+                <p>A "gradual descida de Pearl à psicopatia" e seus "atos violentos" não são o resultado de uma repressão que falhou, mas sim o processo de **desterritorialização** dos agenciamentos que a prendiam.</p>
+                <ul>
+                    <li>**Colapso dos Agenciamentos:** Quando as máquinas desejantes de Pearl (seu desejo de ser estrela, sua sexualidade, sua autonomia) não conseguem se conectar e produzir fluxos no agenciamento social existente (a fazenda, a família), elas se **desconectam violentamente**. A audição falhada é o momento em que a tentativa de uma re-territorialização "normal" falha, forçando uma **desterritorialização radical**.</li>
+                    <li>**Corpo Sem Órgãos (CsO):** A violência de Pearl pode ser vista como a tentativa de alcançar um **Corpo Sem Órgãos (CsO)**, um plano de consistência onde os órgãos (e suas funções codificadas) são desorganizados em favor de fluxos puros de intensidade. Seus atos de assassinato são cortes disruptivos no tecido social e familiar que a prendiam, uma tentativa desesperada de liberar seus fluxos e se livrar de qualquer organização imposta. O CsO de Pearl, neste caso, emerge de forma caótica e destrutiva, pois os fluxos são intensos demais e não encontram saídas produtivas. Ela está raspando o corpo social para criar um novo plano.</li>
+                </ul>
+
+                <h4>4. O Desejo como Força Revolucionária (ou Destrutiva)</h4>
+                <p>A "busca distorcida de Pearl pelo 'sonho americano'" não é sobre uma "falta", mas sobre o **desejo como produção** que tenta (e falha) em se conectar a uma máquina social que o valida. Quando essa conexão não acontece, o desejo não desaparece; ele encontra outras formas de se manifestar. A "liberação" através da violência é a capacidade do desejo de irromper quando codificado e territorializado em excesso.</p>
+                <ul>
+                    <li>**Fluxos de Intensidade:** O filme é visualmente vibrante, e essa "estética vibrante" pode ser interpretada como os próprios **fluxos de intensidade** que atravessam Pearl, contrastando com a rigidez do seu entorno. As explosões de violência são picos de intensidade, cortes que buscam abrir novos caminhos para esses fluxos.</li>
+                </ul>
+                <p>Na esquizoanálise, Pearl é um mapa de fluxos e máquinas: seu desejo de ser uma estrela (fluxo de glória), sua sexualidade (fluxo de prazer), sua agressividade (fluxo de destruição). Esses fluxos são incessantemente cortados e reprimidos pelo agenciamento familiar e social da fazenda (máquina repressora). A "psicopatia" é a forma como o desejo, impossibilitado de fluir livremente, reorganiza suas máquinas em um modo destrutivo para desterritorializar as estruturas que o sufocam. O riso congelado final de Pearl é a face de uma máquina desejante que, embora distorcida e aterrorizante, atingiu um tipo de "liberdade" ao desmantelar as amarras que a impediam de produzir-se. Ela se tornou um **corpo sem órgãos intensivo**, embora a um custo devastador.</p>
+            </div>
+
+            <div id="kierkegaard" class="tab-content">
+                <h3>Uma Análise de "Pearl" Pela Lente de Søren Kierkegaard: Desespero, Escolha e os Estágios da Existência</h3>
+                <p>A obra de Søren Kierkegaard, centrada na subjetividade, na liberdade de escolha e no desespero, oferece uma perspectiva rica e complexa para analisar a tragédia de Pearl. Para Kierkegaard, a existência humana se desdobra em **estágios**: o Estético, o Ético e o Religioso. Pearl parece se debater primordialmente no Estágio Estético, com suas tentativas fracassadas de ascender a outros modos de ser, culminando em um desespero profundo.</p>
+
+                <h4>1. O Estágio Estético: A Busca Pelo Prazer Imediato e a Fuga do Tédio</h4>
+                <p>Pearl encarna a essência do **Estágio Estético**. Sua vida na fazenda é descrita como "monótona", um fardo de tédio insuportável. A estetização da existência busca a satisfação imediata dos desejos, a novidade e a ausência de compromisso ou responsabilidade que possam limitar a liberdade.</p>
+                <ul>
+                    <li>**O Sonho da Estrela de Cinema:** O desejo de Pearl de "se tornar uma estrela de cinema" é a manifestação quintessencial de uma vida estética. Ela busca a fama, o glamour, a admiração e a libertação da realidade mundana. Não há preocupação com a moralidade ou com um propósito maior; o objetivo é a experiência sensorial e a autoafirmação através do reconhecimento externo. O mundo do cinema representa um universo de possibilidades infinitas e prazeres superficiais, onde ela seria o centro da atenção, escapando da trivialidade do cotidiano.</li>
+                    <li>**Impulsividade e Sensualidade:** Seus "desejos reprimidos" e sua "sexualidade" são forças que impulsionam o esteta. Pearl busca gratificação sensorial e emocional, seja através de fantasias, seja através de ações impulsivas e violentas. A "estética vibrante" do filme reflete a tentativa de Pearl de colorir sua realidade sombria com fantasias estéticas, mesmo que distorcidas.</li>
+                </ul>
+
+                <h4>2. O Desespero Estético: A Insuficiência da Escolha e o Vazio Existencial</h4>
+                <p>Para Kierkegaard, o estágio estético é inerentemente falho porque não lida com a profundidade da existência humana. Ele leva ao **desespero**. Pearl experimenta isso de várias formas:</p>
+                <ul>
+                    <li>**O Tédio Insuperável:** Por mais que fantasie, a realidade da fazenda e a rigidez de seus pais a aprisionam. O tédio não pode ser superado por meras distrações ou fantasias estéticas por muito tempo.</li>
+                    <li>**A Ausência de Escolhas Autênticas:** No estágio estético, o indivíduo evita fazer escolhas existenciais verdadeiras, aquelas que definem o eu. Pearl não escolhe ativamente sua vida; ela é compelida por circunstâncias e age por impulso. A ausência de seu marido na guerra e a rigidez parental aumentam seu "isolamento e frustração", pois limitam as poucas opções que ela percebe ter para escapar de sua condição.</li>
+                    <li>**A "Liberação" Distorcida:** A "negação de seus anseios leva a atos violentos". Isso é o desespero estético em sua forma mais brutal. Incapaz de encontrar satisfação na superfície, e sem a coragem (ou a possibilidade) de fazer uma escolha ética ou religiosa que a transforme, Pearl se volta para a destruição. A violência não é uma escolha ética, mas um estouro niilista que busca aniquilar o tédio e a frustração que a consomem.</li>
+                </ul>
+
+                <h4>3. O Salto Ausente: A Impossibilidade do Estágio Ético e Religioso</h4>
+                <p>Kierkegaard postula que, para sair do desespero estético, o indivíduo deve fazer um **salto**.</p>
+                <ul>
+                    <li>**O Estágio Ético (A Escolha de Si Mesmo):** O estágio ético envolve a **escolha radical de si mesmo**, a aceitação da responsabilidade e o compromisso com valores universais. Pearl é incapaz de fazer esse salto. Sua "busca distorcida pelo 'sonho americano'" é egoísta, focada em si mesma, não em um compromisso moral. Ela não se preocupa com o dever ou com a lei universal; ela se preocupa apenas com a satisfação de sua própria ambição. Seu "monólogo final" é uma confissão do desespero, mas não uma superação ética, pois ela não assume a responsabilidade por suas ações de forma a se transformar. Ela está presa em sua própria subjetividade.</li>
+                    <li>**O Estágio Religioso (A Fé e a Relação com o Absoluto):** O salto final para Kierkegaard é o estágio religioso, a **fé**, que transcende até mesmo o ético, envolvendo uma relação paradoxal com Deus. Não há sequer um vislumbre desse estágio em Pearl. Seus pais podem ter uma religiosidade rígida, mas Pearl não a internaliza como uma fé autêntica, mas sim como uma fonte de repressão. O desespero de Pearl é tão profundo que ela está distante de qualquer relação com o absoluto que possa dar sentido à sua existência para além de si mesma.</li>
+                </ul>
+
+                <h4>Conclusão Kierkegaardiana</h4>
+                <p>"Pearl" pode ser vista como uma parábola sombria sobre o **desespero existencial** na ausência de escolhas autênticas. Pearl está presa em um ciclo de busca incessante por gratificação estética que, por sua própria natureza, é insustentável e leva ao vazio. A rigidez de seu ambiente e a "negação de seus anseios" impedem que ela faça o salto para a responsabilidade ética ou a fé religiosa. Sua "descida à psicopatia" não é apenas uma doença mental, mas a consequência existencial de uma vida que se recusou (ou foi impedida) de se definir através de escolhas significativas, permanecendo aprisionada na superfície do desejo estético até que a única saída aparente se torne a destruição de tudo que a cerca, incluindo a si mesma.</p>
+            </div>
+
+            <div id="nietzsche" class="tab-content">
+                <h3>Uma Análise de "Pearl" Pela Lente de Friedrich Nietzsche: Vontade de Potência, Ressentimento e a Transvaloração dos Valores</h3>
+                <p>A tragédia de Pearl, sob a ótica de Friedrich Nietzsche, não é uma história de repressão psicológica ou desespero existencial no sentido kierkegaardiano, mas sim uma poderosa ilustração da **Vontade de Potência**, do **ressentimento** e de uma tentativa brutal (e falha) de **transvaloração dos valores**. Pearl é uma figura que se debate contra as forças de uma moralidade decadente, buscando afirmar sua própria existência em um mundo que a nega.</p>
+
+                <h4>1. A Vontade de Potência Sufocada</h4>
+                <p>Para Nietzsche, a **Vontade de Potência** é a força motriz fundamental de toda a vida, o impulso inerente para crescer, superar obstáculos e afirmar a si mesmo. Pearl é um exemplo vívido de uma Vontade de Potência imensa, mas grotescamente sufocada.</p>
+                <ul>
+                    <li>**Desejo de Ascensão:** Seus "sonhos de se tornar uma estrela de cinema" são a expressão máxima dessa Vontade de Potência. Não se trata de uma busca por prazer superficial, mas de um anseio por **excelência, reconhecimento e superação**. Pearl quer se elevar acima de sua "vida monótona", de sua insignificância. Ela busca um palco onde possa exercer sua força, sua beleza (como ela a percebe) e sua capacidade de impactar os outros. Ela quer ser a "artista", a "criadora" de sua própria realidade, dominando o olhar alheio.</li>
+                    <li>**Opressão e Negação:** A fazenda isolada em 1918, os "pais rígidos" e a "ausência do marido" representam um ambiente de **negação da vida**. Essa moralidade imposta – que valoriza a obediência, a submissão, a castidade e a negação dos instintos – é uma "moralidade de rebanho" que sufoca a individualidade e a Vontade de Potência de Pearl. É uma força que tenta diminuí-la, pasteurizá-la, transformá-la em uma criatura fraca e obediente. O "isolamento e frustração" são o resultado direto dessa Vontade de Potência reprimida, incapaz de se expandir.</li>
+                </ul>
+
+                <h4>2. Ressentimento e a Moralidade de Escravo</h4>
+                <p>Quando a Vontade de Potência de um indivíduo forte é continuamente negada e oprimida, ela pode se degenerar em **ressentimento**. Este é um elemento central na transformação de Pearl.</p>
+                <ul>
+                    <li>**A Inversão de Valores:** O ressentimento nasce quando o fraco não consegue agir sobre o forte e, em vez disso, inverte os valores. O que é "bom" para o forte (força, ambição, beleza) torna-se "mau" para o ressentido, e o que é "mau" (fraqueza, submissão) torna-se "bom". A mãe de Pearl, com sua "rigidez", personifica a moralidade de escravo que Pearl é forçada a internalizar.</li>
+                    <li>**O Ódio da Vida:** A "gradual descida de Pearl à psicopatia" e seus "atos violentos" são a explosão do ressentimento acumulado. O ódio por aqueles que representam essa moralidade repressora (os pais) e por aqueles que encarnam a vida que ela deseja e não pode ter (a cunhada, o projectionista) é transmutado em pura destruição. É uma tentativa de **transvaloração** violenta: se ela não pode ser a "estrela" e ascender, então ela derrubará e destruirá tudo o que a oprime ou o que ela inveja. A violência é a afirmação distorcida da sua Vontade de Potência, uma vez que não conseguiu se manifestar de forma criativa.</li>
+                </ul>
+
+                <h4>3. Tentativa de Super-Homem (ou Além-do-Homem) e seu Fracasso</h4>
+                <p>Pearl pode ser vista como uma tentativa distorcida de se tornar um **Super-Homem (Übermensch)**, um ser que supera a moralidade de rebanho e cria seus próprios valores. Contudo, ela falha tragicamente.</p>
+                <ul>
+                    <li>**Criação de Novos Valores (Brutais):** Ao cometer os assassinatos, Pearl está, a seu modo, tentando "transvalorar os valores". Ela destrói os pilares de sua existência opressora e tenta impor sua própria "lei", baseada em seus desejos mais crus. A "busca distorcida de Pearl pelo 'sonho americano'" não é mais uma busca ingênua, mas uma afirmação cega e brutal de sua Vontade de Potência, que agora é autodestrutiva e niilista.</li>
+                    <li>**A Ausência de Auto-Superação Genuína:** Nietzsche defendia que o Super-Homem se eleva através da **auto-superação** e da criação de valores que afirmam a vida. Pearl, em vez disso, sucumbe ao ressentimento e à destrutividade. Sua "psicopatia" e seus "traumas passados" a impedem de transcender verdadeiramente sua condição através da grandeza; ela regride para uma forma primitiva de afirmação de poder. O riso final de Pearl, ao invés de ser a risada do Super-Homem que dança sobre o abismo, é a risada de um ser que se quebrou sob o peso da negação de sua própria natureza, optando pela destruição em vez da criação.</li>
+                </ul>
+
+                <h4>Conclusão Nietzschiana</h4>
+                <p>"Pearl" é uma tragédia nietzschiana da Vontade de Potência frustrada. A protagonista é um ser com uma imensa energia vital e um desejo ardente de autoafirmação que é esmagado por uma moralidade de escravo sufocante. Sua violência não é apenas patologia, mas a explosão inevitável de um ressentimento profundo. Pearl tenta, de forma brutal e desesperada, uma **transvaloração de todos os valores**, para se libertar e criar sua própria lei. Contudo, ela não se torna um Super-Homem, mas um monstro. O filme é um estudo de caso sobre o perigo de negar a Vontade de Potência e o caminho para o niilismo destrutivo quando a vida é consistentemente negada e a força não encontra uma saída afirmativa.</p>
+            </div>
+
+            <div id="espinosa" class="tab-content">
+                <h3>Uma Análise de "Pearl" Pela Lente de Baruch Espinosa: Afetos, Potência de Agir e a Busca pela Liberdade</h3>
+                <p>Para Baruch Espinosa, a existência é governada por uma única Substância (Deus ou Natureza), e tudo o que existe são modos dessa Substância. Não há livre-arbítrio no sentido tradicional, mas sim uma busca incessante por aumentar a **potência de agir** (conatus) e por compreender as causas dos **afetos** que nos impelem. A tragédia de Pearl, sob a ótica espinosana, revela uma alma (mente) e um corpo tomados por **afetos passionais tristes**, que diminuem sua potência e a impedem de alcançar a verdadeira liberdade através do conhecimento.</p>
+
+                <h4>1. O *Conatus* de Pearl: A Vontade de Persistir e Aumentar a Potência</h4>
+                <p>O conceito central de Espinosa é o **conatus**: a tendência inata de cada ser de persistir em sua existência e aumentar sua potência de agir. Em Pearl, esse *conatus* é evidente e imenso:</p>
+                <ul>
+                    <li>**Desejo de Vida e Expansão:** O "sonho de escapar da vida monótona e se tornar uma estrela de cinema" é a manifestação clara de seu *conatus*. Pearl busca expandir sua existência, sua influência e sua alegria. Ela quer ser mais, agir mais, experimentar mais. Sua vitalidade, mesmo distorcida, é uma afirmação desse impulso fundamental.</li>
+                    <li>**Aversão à Diminuição:** A "vida monótona" na fazenda, os "pais rígidos" e o "isolamento" são condições que **diminuem sua potência de agir**. Eles limitam seus movimentos, suas expressões, suas conexões com o mundo. O *conatus* de Pearl reage a essa diminuição com uma força crescente, buscando romper com essas amarras.</li>
+                </ul>
+
+                <h4>2. Afetos Passionais: Alegria, Tristeza e as Cadeias da Servidão</h4>
+                <p>Espinosa distingue entre **afetos alegres** (que aumentam a potência de agir) e **afetos tristes** (que a diminuem). A vida de Pearl é dominada por uma cascata de afetos passionais tristes, que a conduzem à servidão.</p>
+                <ul>
+                    <li>**Tristeza, Frustração e Ódio:** A "frustração" e o "isolamento" são afetos tristes primários. Eles geram a tristeza pela ausência de sua alegria desejada. Essa tristeza se transforma em **ódio** (tristeza acompanhada da ideia de uma causa externa) direcionado aos seus pais e, por extensão, a tudo que a impede de realizar seu *conatus*. O ódio e a inveja são afetos passionais que aprisionam a mente, impedindo-a de agir livremente.</li>
+                    <li>**O Desejo Cego:** O "desejo desesperado por fama" e a "busca distorcida pelo 'sonho americano'" não são desejos guiados pela razão, mas por **paixões**. Pearl é "determinada" por esses afetos cegos, que a impulsionam sem que ela compreenda suas verdadeiras causas ou consequências. Ela acredita que a fama trará alegria, mas a alegria gerada por afetos externos é volátil e ilusória.</li>
+                    <li>**A Violência como Erupção da Tristeza:** Os "atos violentos" são a manifestação máxima dos afetos tristes acumulados. Não são atos de "livre-arbítrio", mas sim a expressão necessária de sua mente e corpo sendo impelidos por um excesso de tristeza, ódio e desespero. Eles são o resultado de uma potência de agir que foi tão negada que se expressa de forma destrutiva, corroendo a si mesma e aos outros.</li>
+                </ul>
+
+                <h4>3. Em Busca da Liberdade: Da Servidão à Ação (Inalcançada)</h4>
+                <p>Para Espinosa, a **liberdade** não é fazer o que se quer, mas compreender as causas que nos determinam e agir a partir de um conhecimento claro e adequado, em vez de sermos meramente levados pelas paixões.</p>
+                <ul>
+                    <li>**A Ilusão da Causa Externa:** Pearl está presa na **servidão**. Ela culpa externamente seus pais, a fazenda e as circunstâncias pela sua miséria. Ela não compreende que seus próprios afetos e a forma como seu corpo e mente interagem com essas causas externas são o que a move. Ela busca uma "liberação" que é meramente a remoção de uma causa externa de tristeza, sem alcançar a verdadeira compreensão de si mesma.</li>
+                    <li>**O Monólogo como Semelhança de Conhecimento:** O "marcante monólogo final" de Mia Goth é um momento interessante do ponto de vista espinosano. Nele, Pearl parece articular e "explicar" suas motivações. Isso poderia ser interpretado como um rudimento de **conhecimento adequado** – uma tentativa de compreender as causas de seus afetos. No entanto, o desfecho trágico sugere que esse conhecimento veio tarde demais e não foi suficiente para transformar seus afetos passionais em afetos ativos (aqueles que nascem da própria essência do indivíduo e são baseados na compreensão). Ela ainda está tomada pela tristeza, pelo remorso e pela obsessão.</li>
+                </ul>
+
+                <h4>Conclusão Espinosana</h4>
+                <p>"Pearl" é uma dolorosa demonstração da **servidão humana** às paixões tristes. A Vontade de Potência de Pearl é inegável, mas ela é sistematicamente diminuída por um ambiente hostil e por uma incapacidade de compreender as verdadeiras causas de seus próprios afetos. Ela não alcança a liberdade porque sua mente e corpo são determinados por afetos que a impulsionam ao ódio, à frustração e, finalmente, à destruição. Ela é um modo da Substância que, por estar em interação com outros modos que diminuem sua potência, acaba por se desintegrar em uma cadeia de paixões tristes, incapaz de transitar para a alegria que vem do conhecimento claro e da ação autônoma. O filme serve como um lembrete vívido das consequências de uma vida dominada pela paixão e desprovida da luz da compreensão.</p>
+            </div>
+
+            <div id="comparativa" class="tab-content">
+                <h3>Tabela Comparativa de Análises de "Pearl"</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Perspectiva Teórica</th>
+                            <th>Conceitos Chave Aplicados a Pearl</th>
+                            <th>Como Pearl é Vista</th>
+                            <th>A "Tragédia" ou Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Perspectiva Teórica">**Psicanálise Freudiana**</td>
+                            <td data-label="Conceitos Chave Aplicados a Pearl">**Id (Isso)**, **Ego (Eu)**, **Superego (Supereu)**, **Repressão (Recalque)**, **Retorno do Reprimido**, Libido, Thanatos (Pulsão de Morte), Abreação, Sublimação Falha.</td>
+                            <td data-label="Como Pearl é Vista">Uma mente em guerra consigo mesma; um caso de histeria ou psicose; um ser dominado por conflitos internos não resolvidos.</td>
+                            <td data-label="A 'Tragédia' ou Resultado">A desintegração do Ego sob a pressão de um Id incontrolável e um Superego tirânico. O retorno violento do que foi reprimido.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Perspectiva Teórica">**Esquizoanálise (Deleuze & Guattari)**</td>
+                            <td data-label="Conceitos Chave Aplicados a Pearl">**Máquina Desejante**, **Fluxos de Desejo**, **Cortes**, **Agenciamento Maquínico Social**, **Territorialização**, **Desterritorialização**, Corpo Sem Órgãos (CsO), Produção do Desejo.</td>
+                            <td data-label="Como Pearl é Vista">Um agenciamento de máquinas que busca produzir e conectar fluxos de desejo; um ser aprisionado por máquinas sociais repressivas.</td>
+                            <td data-label="A 'Tragédia' ou Resultado">A desterritorialização violenta dos agenciamentos que a prendiam, resultando em caos e destruição, na busca por um plano de consistência (Corpo Sem Órgãos) que emerge de forma brutal.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Perspectiva Teórica">**Existencialismo (Kierkegaard)**</td>
+                            <td data-label="Conceitos Chave Aplicados a Pearl">**Estágios da Existência** (Estético), **Desespero**, **Liberdade de Escolha**, Tédio, Impulsividade, Salto (Ético, Religioso).</td>
+                            <td data-label="Como Pearl é Vista">Um indivíduo preso no **Estágio Estético**; um ser que se recusa (ou é impedido) de fazer escolhas autênticas e se definir.</td>
+                            <td data-label="A 'Tragédia' ou Resultado">A completa submersão no **desespero existencial**, manifestado na violência, pela incapacidade de fazer o "salto" para os estágios Ético ou Religioso e encontrar um sentido mais profundo.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Perspectiva Teórica">**Filosofia de Nietzsche**</td>
+                            <td data-label="Conceitos Chave Aplicados a Pearl">**Vontade de Potência**, **Ressentimento**, **Moralidade de Rebanho**, Transvaloração dos Valores, Super-Homem (falho).</td>
+                            <td data-label="Como Pearl é Vista">Uma força vital imensa (Vontade de Potência) sufocada; um indivíduo consumido pelo ressentimento contra uma moralidade decadente.</td>
+                            <td data-label="A 'Tragédia' ou Resultado">A **explosão niilista do ressentimento** quando a Vontade de Potência é negada, levando à destruição em vez da verdadeira auto-superação e criação de novos valores.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Perspectiva Teórica">**Filosofia de Espinosa**</td>
+                            <td data-label="Conceitos Chave Aplicados a Pearl">**Conatus** (Potência de Agir), **Afetos Passionais** (Alegres, Tristes), Servidão, Liberdade (pelo Conhecimento Adequado), Determinação.</td>
+                            <td data-label="Como Pearl é Vista">Um ser cujas ações são determinadas por **afetos passionais tristes** que diminuem sua potência de agir; uma alma em servidão às causas externas.</td>
+                            <td data-label="A 'Tragédia' ou Resultado">A **servidão inescapável** aos afetos tristes (ódio, frustração), que a impedem de aumentar sua potência de agir e alcançar a liberdade através do conhecimento adequado, resultando em destruição.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="joguinho" class="section">
+            <h2 id="game-title">O Desafio da Fama de Pearl!</h2>
+            <p>Ajude Pearl a coletar os sonhos de fama e desviar dos obstáculos da fazenda! Quantos sonhos você consegue pegar antes que a frustração a atinja?</p>
+            <div id="game-section">
+                <canvas id="game-canvas" width="400" height="300"></canvas>
+                <div id="game-controls">
+                    <button id="startButton">Iniciar Jogo</button>
+                    <p>Pontuação: <span id="score">0</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="section">
+            <h2>Entre em Contato</h2>
+            <p>Tem alguma sugestão, dúvida ou quer propor uma nova análise? Adoraríamos ouvir você!</p>
+            <p>Envie um e-mail para: <a href="mailto:helonjk@gmail.com">helonjk@gmail.com</a></p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Mundo Pearl. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // --- CÓDIGO DO JOGUINHO SIMPLES ---
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        const scoreDisplay = document.getElementById('score');
+
+        let pearlX = canvas.width / 2;
+        let pearlY = canvas.height - 30;
+        const pearlRadius = 10;
+        let pearlSpeedX = 0; // Controlado pelas setas
+
+        let dreams = [];
+        const dreamRadius = 8;
+        const dreamSpeed = 2;
+        const dreamInterval = 1000; // ms
+
+        let obstacles = [];
+        const obstacleWidth = 20;
+        const obstacleHeight = 20;
+        const obstacleSpeed = 3;
+        const obstacleInterval = 700; // ms
+
+        let score = 0;
+        let gameOver = false;
+        let gameRunning = false;
+        let animationFrameId;
+
+        // Imagem da Pearl (um círculo simples para este exemplo)
+        function drawPearl() {
+            ctx.beginPath();
+            ctx.arc(pearlX, pearlY, pearlRadius, 0, Math.PI * 2);
+            ctx.fillStyle = 'red'; // Pearl
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Imagem dos sonhos (estrelas simples)
+        function drawDream(dream) {
+            ctx.beginPath();
+            ctx.arc(dream.x, dream.y, dreamRadius, 0, Math.PI * 2);
+            ctx.fillStyle = 'gold'; // Sonhos
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Imagem dos obstáculos (quadrados escuros)
+        function drawObstacle(obstacle) {
+            ctx.fillStyle = 'darkgrey'; // Obstáculos
+            ctx.fillRect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight);
+        }
+
+        function update() {
+            if (!gameRunning || gameOver) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
+
+            // Atualiza posição da Pearl
+            pearlX += pearlSpeedX;
+            if (pearlX < pearlRadius) pearlX = pearlRadius;
+            if (pearlX > canvas.width - pearlRadius) pearlX = canvas.width - pearlRadius;
+            drawPearl();
+
+            // Atualiza sonhos
+            dreams.forEach((dream, index) => {
+                dream.y += dreamSpeed;
+                drawDream(dream);
+                // Checa colisão com Pearl
+                if (
+                    pearlX < dream.x + dreamRadius &&
+                    pearlX + pearlRadius > dream.x &&
+                    pearlY < dream.y + dreamRadius &&
+                    pearlY + pearlRadius > dream.y
+                ) {
+                    score += 10;
+                    scoreDisplay.textContent = score;
+                    dreams.splice(index, 1); // Remove o sonho coletado
+                }
+            });
+            dreams = dreams.filter(dream => dream.y < canvas.height + dreamRadius); // Remove sonhos fora da tela
+
+            // Atualiza obstáculos
+            obstacles.forEach((obstacle, index) => {
+                obstacle.y += obstacleSpeed;
+                drawObstacle(obstacle);
+                // Checa colisão com Pearl
+                if (
+                    pearlX < obstacle.x + obstacleWidth &&
+                    pearlX + pearlRadius > obstacle.x &&
+                    pearlY < obstacle.y + obstacleHeight &&
+                    pearlY + pearlRadius > obstacle.y
+                ) {
+                    endGame(); // Fim de jogo se colidir com obstáculo
+                }
+            });
+            obstacles = obstacles.filter(obstacle => obstacle.y < canvas.height + obstacleHeight); // Remove obstáculos fora da tela
+
+            animationFrameId = requestAnimationFrame(update);
+        }
+
+        function spawnDream() {
+            if (!gameRunning) return;
+            const x = Math.random() * (canvas.width - 2 * dreamRadius) + dreamRadius;
+            dreams.push({ x: x, y: 0 });
+            setTimeout(spawnDream, dreamInterval);
+        }
+
+        function spawnObstacle() {
+            if (!gameRunning) return;
+            const x = Math.random() * (canvas.width - obstacleWidth);
+            obstacles.push({ x: x, y: 0 });
+            setTimeout(spawnObstacle, obstacleInterval);
+        }
+
+        function startGame() {
+            if (gameRunning) return; // Evita iniciar várias vezes
+            gameRunning = true;
+            gameOver = false;
+            score = 0;
+            scoreDisplay.textContent = score;
+            dreams = [];
+            obstacles = [];
+            pearlX = canvas.width / 2;
+            pearlY = canvas.height - 30;
+
+            startButton.textContent = "Reiniciar Jogo";
+            document.getElementById('game-title').textContent = "O Desafio da Fama de Pearl!"; // Resetar mensagem
+
+            spawnDream();
+            spawnObstacle();
+            animationFrameId = requestAnimationFrame(update);
+        }
+
+        function endGame() {
+            gameRunning = false;
+            gameOver = true;
+            cancelAnimationFrame(animationFrameId);
+            document.getElementById('game-title').textContent = `Fim de Jogo! Pontuação Final: ${score}`;
+            startButton.textContent = "Tentar Novamente";
+        }
+
+        // Controles de teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a') {
+                pearlSpeedX = -5;
+            } else if (e.key === 'ArrowRight' || e.key === 'd') {
+                pearlSpeedX = 5;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'ArrowRight' || e.key === 'd') {
+                pearlSpeedX = 0;
+            }
+        });
+
+        startButton.addEventListener('click', startGame);
+
+        // Desenhar a Pearl inicial
+        drawPearl();
+
+        // --- LÓGICA DAS ABAS ---
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+
+            // Oculta todo o conteúdo das abas
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Remove a classe "active" de todos os botões de aba
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Mostra a aba atual e adiciona a classe "active" ao botão que a abriu
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Abrir a primeira aba por padrão ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.tab-button').click();
+        });
+    </script>
+</body>
+</html>
